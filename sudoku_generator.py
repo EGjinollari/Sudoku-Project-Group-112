@@ -272,9 +272,3 @@ def generate_sudoku(size, removed):
     sudoku.remove_cells()
     board = sudoku.get_board()
     return board
-
-
-for i in generate_sudoku(9, 10):
-    for j in i:
-        print(j, end=' ')
-    print('')
