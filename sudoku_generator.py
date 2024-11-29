@@ -9,7 +9,7 @@ https://www.geeksforgeeks.org/program-sudoku-generator/
 
 class SudokuGenerator:
     '''
-	create a sudoku board - initialize class variables and set up the 2D board
+	create a sudoku board - initialize instance variables and set up the 2D board
 	This should initialize:
 	self.row_length		- the length of each row
 	self.removed_cells	- the total number of cells to be removed
@@ -41,7 +41,6 @@ class SudokuGenerator:
 
     def get_board(self):
         return self.board
-
 
     '''
 	Displays the board to the console
@@ -115,7 +114,6 @@ class SudokuGenerator:
                     return False
         return True
 
-
     '''
     Determines if it is valid to enter num at (row, col) in the board
     This is done by checking that num is unused in the appropriate, row, column, and box
@@ -152,9 +150,6 @@ class SudokuGenerator:
                 if len(digits) == 0:
                     digits = [1, 2, 3, 4, 5, 6, 7, 8, 9]
                 self.board[row][col] = digits.pop(random.randint(0, len(digits) - 1))
-
-
-
 
     '''
     Fills the three boxes along the main diagonal of the board
