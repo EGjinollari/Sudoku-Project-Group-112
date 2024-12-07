@@ -15,7 +15,7 @@ from board import Board
 SCREEN_WIDTH = 603 # Closest integer to 600 that is divisible by 9
 SCREEN_HEIGHT = 700
 BACKGROUND_COLOR = (255, 255, 255)
-BUTTON_COLOR = (200, 200, 200)
+BUTTON_COLOR = (175, 175, 255)
 TEXT_COLOR = (0, 0, 0)
 
 """
@@ -71,7 +71,7 @@ def draw_difficulty_buttons(screen):
     button_rects = []
 
     for i in range(len(button_labels)):
-        rect = pygame.Rect(button_positions[i] - 50, 400, 100, 50)
+        rect = pygame.Rect(button_positions[i] - 50, 400, 140, 50)
         pygame.draw.rect(screen, BUTTON_COLOR, rect)
         text = font.render(button_labels[i], True, TEXT_COLOR)
         screen.blit(text, text.get_rect(center=rect.center))
@@ -134,15 +134,19 @@ def main():
     pygame.display.set_caption("Sudoku Game")
     clock = pygame.time.Clock()
 
+    running = True
+
     # Difficulty buttons
     easy_button, medium_button, hard_button = draw_difficulty_buttons(screen)
     pygame.display.flip()
 
     difficulty = None
-    while difficulty is None:
+    while difficulty is None and running:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
+                running = False
                 pygame.quit()
+
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if easy_button.collidepoint(event.pos):
                     difficulty = "easy"
@@ -155,7 +159,6 @@ def main():
     board = Board(SCREEN_WIDTH, SCREEN_WIDTH, screen, difficulty)
 
     # Main game loop
-    running = True
     game_over = False
     game_won = False
 
@@ -167,14 +170,19 @@ def main():
 
             if event.type == pygame.QUIT:
                 running = False
+                break
 
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 if reset_btn.collidepoint(event.pos): # User presses reset button
                     board.reset_to_original()
+
                 elif restart_btn.collidepoint(event.pos): # User presses restart button
-                    main()  # Restart the game by recursion
+                    main()  # Restart the game via recursion
+
                 elif exit_btn.collidepoint(event.pos): # User presses exit button
                     running = False
+                    break
+
                 else:
                     cell = board.click(event.pos[0], event.pos[1])
                     if cell:
@@ -183,7 +191,7 @@ def main():
             elif event.type == pygame.KEYDOWN:
                 if board.selected:
                     if pygame.K_1 <= event.key <= pygame.K_9:
-                        board.sketch(event.key - pygame.K_0) # cool trick to sketch the input value
+                        board.sketch(event.key - pygame.K_0) # cool trick get the sketch value
 
                     elif event.key == pygame.K_RETURN:
                         row, col = board.selected
@@ -203,8 +211,6 @@ def main():
                                     restart_btn = draw_game_over_screen(screen)
 
     pygame.quit()
-
-
 
 if __name__ == "__main__":
     main()
