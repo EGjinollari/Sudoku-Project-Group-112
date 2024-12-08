@@ -1,13 +1,3 @@
-'''
-######
-
-NEED TO:
-Add "Game over" and "you won" screen.
-simplify code to an easier level in app.py
-Can sketched-and-confirmed cells be resketched?
-
-######
-'''
 import pygame
 from board import Board
 
